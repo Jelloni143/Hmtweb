@@ -1,0 +1,251 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google-site-verification" content="<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Virus7H Ethical Hacking Bootcamp — Hemant Verma</title>
+  <meta name="description" content="Ethical Hacking Bootcamp by Hemant Verma. Learn defensive security, penetration testing basics, web security, and safe CTF practice." />
+  <style>
+    /* --- Reset --- */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#010204;color:#cfe;line-height:1.4}
+
+    /* --- Background & matrix code rain --- */
+    .matrix {
+      position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.12;background:linear-gradient(180deg,#000814 0%, #001022 60%, #001b13 100%);
+    }
+    canvas#rain{width:100%;height:100%;display:block}
+
+    /* --- Layout --- */
+    .wrap{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column}
+    header{padding:28px 28px 8px 28px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;gap:14px;align-items:center}
+    .logo{width:64px;height:64px;border-radius:8px;background:linear-gradient(135deg,#00ff9f,#00ffd1);display:grid;place-items:center;color:#001; font-weight:800;letter-spacing:0.6px;box-shadow:0 6px 20px rgba(0,255,150,0.08)}
+    .brand h1{font-size:18px;color:#bfffdc}
+    .brand p{font-size:12px;color:#9ef0c9;margin-top:2px}
+
+    nav .socials{display:flex;gap:12px;align-items:center}
+    .socials a{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.02);padding:8px 12px;border-radius:10px;color:#9ef0c9;text-decoration:none;border:1px solid rgba(0,255,150,0.06);backdrop-filter:blur(2px)}
+    .socials a:hover{transform:translateY(-3px)}
+
+    main{flex:1;display:grid;grid-template-columns:1fr 420px;gap:28px;padding:24px}
+
+    /* --- Hero --- */
+    .hero{padding:28px;border-radius:14px;background:linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0.25));box-shadow:0 10px 30px rgba(0,0,0,0.6);border:1px solid rgba(0,255,150,0.05)}
+    .hero .eyebrow{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(0,255,150,0.06);color:#bfffdc;font-size:12px;margin-bottom:14px}
+    .hero h2{font-size:34px;color:#daffd8;line-height:1.05;margin-bottom:12px}
+    .hero p.lead{color:#bfe9cf;margin-bottom:18px}
+
+    .cta-row{display:flex;gap:12px;align-items:center}
+    .btn{padding:12px 16px;border-radius:12px;text-decoration:none;font-weight:700;border:1px solid rgba(0,255,150,0.12);cursor:pointer}
+    .btn-primary{background:linear-gradient(90deg,#00ff9f,#00ffd1);color:#001}
+    .btn-ghost{background:transparent;color:#bfffdc}
+
+    .features{display:flex;gap:12px;margin-top:18px}
+    .chip{padding:8px 10px;background:rgba(255,255,255,0.02);border-radius:10px;font-size:13px;border:1px solid rgba(255,255,255,0.02)}
+
+    /* --- Sidebar / Card --- */
+    .card{padding:20px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(0,255,150,0.03)}
+    .instructor{display:flex;gap:12px;align-items:center}
+    .avatar{width:72px;height:72px;border-radius:12px;background:linear-gradient(135deg,#002b1f,#004d32);display:grid;place-items:center;color:#9ef0c9;font-weight:700}
+    .instructor p{color:#bfe9cf}
+
+    .syllabus{margin-top:16px}
+    .module{padding:12px;border-radius:10px;background:rgba(0,0,0,0.25);margin-bottom:10px}
+    .module h4{font-size:14px;margin-bottom:6px;color:#dfffe9}
+    .module p{font-size:13px;color:#9ee0c9}
+
+    footer{padding:18px 28px;color:#98e3c5;font-size:13px;display:flex;justify-content:space-between;align-items:center}
+
+    /* --- Code panel --- */
+    .term{margin-top:18px;padding:16px;border-radius:10px;background:linear-gradient(180deg,#001217,#002923);font-family:source-code-pro, Menlo, monospace;color:#a6f5d6;font-size:13px;line-height:1.6;border:1px solid rgba(0,255,150,0.04)}
+
+    /* --- Modal --- */
+    .modal{position:fixed;inset:0;display:grid;place-items:center;background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6));z-index:40;opacity:0;pointer-events:none;transition:all .22s}
+    .modal.open{opacity:1;pointer-events:auto}
+    .modal .box{width:520px;max-width:94%;background:#041214;padding:20px;border-radius:10px;border:1px solid rgba(0,255,150,0.06)}
+
+    /* --- Responsive --- */
+    @media (max-width:900px){main{grid-template-columns:1fr;padding:20px}.hero h2{font-size:26px}}
+
+    /* small animations */
+    .glitch {
+      position:relative;display:inline-block
+    }
+    .glitch::after, .glitch::before{
+      content:attr(data-text);position:absolute;left:0;top:0;opacity:0.7}
+    .glitch::before{color:#00ffd1;clip-path:polygon(0 2%,100% 0,100% 40%,0 36%);transform:translate(-2px,-1px);mix-blend-mode:screen}
+    .glitch::after{color:#00ff9f;clip-path:polygon(0 60%,100% 64%,100% 100%,0 100%);transform:translate(1px,2px);mix-blend-mode:screen}
+  </style>
+</head>
+<body>
+  <div class="matrix"><canvas id="rain"></canvas></div>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">V7</div>
+        <div>
+          <h1>Virus7H Bootcamp</h1>
+          <p>Ethical Hacking • Defensive Security • CTF Practice</p>
+        </div>
+      </div>
+      <nav>
+        <div class="socials">
+          <a href="https://instagram.com/hemant.v17" target="_blank" rel="noopener noreferrer">
+            <!-- Instagram SVG -->
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.2"></rect><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.2"></circle><circle cx="18" cy="6" r="0.8" fill="currentColor"></circle></svg>
+            @hemant.v17
+          </a>
+          <a href="https://t.me/virus7H" target="_blank" rel="noopener noreferrer">
+            <!-- Telegram SVG -->
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 2L2 10.5l5.4 2.1L9.5 21l3.9-2.3L20 22 22 2z" stroke="currentColor" stroke-width="0.8" fill="currentColor"/></svg>
+            t.me/virus7H
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <span class="eyebrow">Instructor: Hemant Verma</span>
+        <h2 class="glitch" data-text="Learn Ethical Hacking — Legally & Practically">Learn Ethical Hacking — Legally & Practically</h2>
+        <p class="lead">A hands-on bootcamp that teaches web security, network fundamentals, safe penetration testing techniques, CTF workflows and — most importantly — legal & ethical responsibilities.</p>
+
+        <div class="cta-row">
+          <button class="btn btn-primary" id="enrollBtn">Enroll Now</button>
+          <a class="btn btn-ghost" href="#syllabus">View Syllabus</a>
+        </div>
+
+        <div class="features">
+          <div class="chip">Beginner → Intermediate</div>
+          <div class="chip">Live Labs & CTFs</div>
+          <div class="chip">Certificate of Completion</div>
+        </div>
+
+        <div class="term" aria-hidden="false">
+          <strong>Quick preview — safe demo command:</strong>
+          <pre style="margin-top:10px;white-space:pre-wrap">$ docker run --rm -it vulnerable-app:latest
+# Always use isolated labs. Never test on systems you don't own.</pre>
+        </div>
+      </section>
+
+      <aside class="card">
+        <div class="instructor">
+          <div class="avatar">HV</div>
+          <div>
+            <h3 style="color:#e9fff0">Hemant Verma</h3>
+            <p>Lead Instructor — Cybersecurity Enthusiast & CTF player</p>
+            <p style="font-size:12px;margin-top:8px;color:#9fe4c7">Telegram: <a href="https://t.me/virus7H" target="_blank" style="color:inherit;">t.me/virus7H</a></p>
+          </div>
+        </div>
+
+        <div class="syllabus" id="syllabus">
+          <h4 style="color:#cfe">Syllabus (high-level)</h4>
+          <div class="module">
+            <h4>Module 1 — Foundations</h4>
+            <p>Networking basics, OS intro, Linux commands, safe lab setup with VMs & Docker.</p>
+          </div>
+          <div class="module">
+            <h4>Module 2 — Web Security</h4>
+            <p>HTTP, auth, cookies, OWASP Top 10, Burp Suite basics & manual testing.</p>
+          </div>
+          <div class="module">
+            <h4>Module 3 — Pentesting Workflow</h4>
+            <p>Recon, scanning, exploitation basics (safe lab), post-exploitation, reporting.</p>
+          </div>
+          <div class="module">
+            <h4>Module 4 — CTF & Practicals</h4>
+            <p>Hands-on CTF challenges: crypto, pwn, web, forensics, write-ups & guidance.</p>
+          </div>
+          <div class="module">
+            <h4>Module 5 — Legal & Ethical</h4>
+            <p>Law, responsible disclosure, building an ethical mindset and career pathways.</p>
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <a class="btn btn-primary" href="mailto:hemant.verma@example.com?subject=Enrollment%20Inquiry" style="display:inline-block">Contact Instructor</a>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div>© <strong>Hemant Verma</strong> — Virus7H Bootcamp · Ethical Hacking Only</div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <a href="https://instagram.com/hemant.v17" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://t.me/virus7H" target="_blank" rel="noopener noreferrer">Telegram</a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="box">
+      <h3 style="margin-bottom:8px;color:#e9fff0">Quick Enrollment</h3>
+      <p style="color:#9fe4c7">Send your email & a short intro. We will contact you with batch details.</p>
+      <form id="enrollForm" style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
+        <input name="name" placeholder="Your name" required style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:#021410;color:#dfffe9">
+        <input name="email" type="email" placeholder="Email" required style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:#021410;color:#dfffe9">
+        <textarea name="note" placeholder="A short note (experience / goals)" rows="3" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:#021410;color:#dfffe9"></textarea>
+        <div style="display:flex;gap:8px;justify-content:flex-end">
+          <button type="button" class="btn btn-ghost" id="closeModal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Send</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Matrix rain
+    (function(){
+      const c=document.getElementById('rain');
+      const ctx=c.getContext('2d');
+      let w,h;function resize(){w=c.width=innerWidth;h=c.height=innerHeight;}
+      resize();addEventListener('resize',resize);
+      const cols=Math.floor(w/14);
+      let ypos=new Array(cols).fill(0);
+      function matrix(){
+        ctx.fillStyle='rgba(0,0,0,0.08)';
+        ctx.fillRect(0,0,w,h);
+        ctx.fillStyle='rgba(0,255,150,0.12)';
+        ctx.font='13px monospace';
+        for(let i=0;i<ypos.length;i++){
+          const text=String.fromCharCode(33+Math.random()*94);
+          const x=i*14;ctx.fillText(text,x,ypos[i]*14);
+          if(ypos[i]*14>h && Math.random()>0.975) ypos[i]=0; else ypos[i]++;
+        }
+        requestAnimationFrame(matrix);
+      }
+      matrix();
+    })();
+
+    // Modal logic
+    const enrollBtn=document.getElementById('enrollBtn');
+    const modal=document.getElementById('modal');
+    const closeModal=document.getElementById('closeModal');
+    enrollBtn.addEventListener('click',()=>modal.classList.add('open'));
+    closeModal.addEventListener('click',()=>modal.classList.remove('open'));
+
+    // Simple form submit -> open mailto (client-side fallback)
+    document.getElementById('enrollForm').addEventListener('submit',function(e){
+      e.preventDefault();
+      const fd=new FormData(e.target);
+      const name=fd.get('name');
+      const email=fd.get('email');
+      const note=fd.get('note');
+      const subject=encodeURIComponent('Enrollment: '+name);
+      const body=encodeURIComponent('Name: '+name+'\nEmail: '+email+'\nNote: '+note+'\n\nI agree to participate in ethical & legal activities only.');
+      window.location.href='mailto:hemant.verma@example.com?subject='+subject+'&body='+body;
+    });
+
+    // small accessibility: close modal on ESC
+    document.addEventListener('keydown',e=>{if(e.key==='Escape') modal.classList.remove('open')});
+  </script>
+</body>
+  </html>" />
+  <title>Hemant - Ethical Hacking Course</title>
+</head>
